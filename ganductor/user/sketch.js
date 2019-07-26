@@ -183,6 +183,7 @@ function gotResults(err, result) {
     // select('#confidenceGO').html(`${confidences['GO'] ? confidences['GO'] * 100 : 0} %`);
     // select('#confidenceSTOP').html(`${confidences['STOP'] ? confidences['STOP'] * 100 : 0} %`);
   }
+
   try {
     classify();
   } catch(err) {

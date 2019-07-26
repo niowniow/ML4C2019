@@ -94,25 +94,25 @@ buttonVUP = select('#addClassVUP');
     addExample('VDW');
   });
 
-  //   buttonNUP = select('#addClassNUP');
-  // buttonNUP.mousePressed(function() {
-  //   addExample('NUP');
-  // });
-  //
-  //     buttonNDW = select('#addClassNDW');
-  // buttonNDW.mousePressed(function() {
-  //   addExample('NDW');
-  // });
-  //
-  //     buttonGO = select('#addClassGO');
-  // buttonGO.mousePressed(function() {
-  //   addExample('GO');
-  // });
-  //
-  //       buttonSTOP = select('#addClassSTOP');
-  // buttonSTOP.mousePressed(function() {
-  //   addExample('STOP');
-  // });
+    buttonNUP = select('#addClassNUP');
+  buttonNUP.mousePressed(function() {
+    addExample('NUP');
+  });
+
+      buttonNDW = select('#addClassNDW');
+  buttonNDW.mousePressed(function() {
+    addExample('NDW');
+  });
+
+      buttonGO = select('#addClassGO');
+  buttonGO.mousePressed(function() {
+    addExample('GO');
+  });
+
+        buttonSTOP = select('#addClassSTOP');
+  buttonSTOP.mousePressed(function() {
+    addExample('STOP');
+  });
 
   // Reset buttons
   resetBtnVUP = select('#resetVUP');
@@ -125,24 +125,24 @@ buttonVUP = select('#addClassVUP');
     clearLabel('VDW');
   });
 
-  // resetBtnNUP = select('#resetNUP');
-  // resetBtnNUP.mousePressed(function() {
-  //   clearLabel('NUP');
-  // });
-  //
-  //   resetBtnNDW = select('#resetNDW');
-  // resetBtnNDW.mousePressed(function() {
-  //   clearLabel('NDW');
-  // });
-  //
-  //     resetBtnGO = select('#resetGO');
-  // resetBtnGO.mousePressed(function() {
-  //   clearLabel('GO');
-  // });
-  //       resetBtnSTOP = select('#resetSTOP');
-  // resetBtnSTOP.mousePressed(function() {
-  //   clearLabel('STOP');
-  // });
+  resetBtnNUP = select('#resetNUP');
+  resetBtnNUP.mousePressed(function() {
+    clearLabel('NUP');
+  });
+
+    resetBtnNDW = select('#resetNDW');
+  resetBtnNDW.mousePressed(function() {
+    clearLabel('NDW');
+  });
+
+      resetBtnGO = select('#resetGO');
+  resetBtnGO.mousePressed(function() {
+    clearLabel('GO');
+  });
+        resetBtnSTOP = select('#resetSTOP');
+  resetBtnSTOP.mousePressed(function() {
+    clearLabel('STOP');
+  });
   // Predict button
   buttonPredict = select('#buttonPredict');
   buttonPredict.mousePressed(classify);
@@ -178,10 +178,10 @@ function gotResults(err, result) {
 
     select('#confidenceVUP').html(`${confidences['VUP'] ? confidences['VUP'] * 100 : 0} %`);
     select('#confidenceVDW').html(`${confidences['VDW'] ? confidences['VDW'] * 100 : 0} %`);
-    // select('#confidenceNUP').html(`${confidences['NUP'] ? confidences['NUP'] * 100 : 0} %`);
-    // select('#confidenceNDW').html(`${confidences['NDW'] ? confidences['NDW'] * 100 : 0} %`);
-    // select('#confidenceGO').html(`${confidences['GO'] ? confidences['GO'] * 100 : 0} %`);
-    // select('#confidenceSTOP').html(`${confidences['STOP'] ? confidences['STOP'] * 100 : 0} %`);
+    select('#confidenceNUP').html(`${confidences['NUP'] ? confidences['NUP'] * 100 : 0} %`);
+    select('#confidenceNDW').html(`${confidences['NDW'] ? confidences['NDW'] * 100 : 0} %`);
+    select('#confidenceGO').html(`${confidences['GO'] ? confidences['GO'] * 100 : 0} %`);
+    select('#confidenceSTOP').html(`${confidences['STOP'] ? confidences['STOP'] * 100 : 0} %`);
   }
   try {
     classify();
@@ -196,10 +196,10 @@ function updateCounts() {
 
   select('#exampleVUP').html(counts['VUP'] || 0);
   select('#exampleVDW').html(counts['VDW'] || 0);
-  // select('#exampleNUP').html(counts['NUP'] || 0);
-  // select('#exampleNDW').html(counts['NDW'] || 0);
-  // select('#exampleGO').html(counts['GO'] || 0);
-  // select('#exampleSTOP').html(counts['STOP'] || 0);
+  select('#exampleNUP').html(counts['NUP'] || 0);
+  select('#exampleNDW').html(counts['NDW'] || 0);
+  select('#exampleGO').html(counts['GO'] || 0);
+  select('#exampleSTOP').html(counts['STOP'] || 0);
 }
 
 // Clear the examples in one label

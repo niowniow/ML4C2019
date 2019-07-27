@@ -1,0 +1,6 @@
+[submodule "ganductor/p5js-osc"]
+	path = ganductor/p5js-osc
+	url = https://github.com/genekogan/p5js-osc
+[submodule "ganductor/user/osc-web"]
+	path = ganductor/user/osc-web
+	url = https://github.com/automata/osc-web

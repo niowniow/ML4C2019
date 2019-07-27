@@ -71,12 +71,16 @@ function classify() {
   knnClassifier.classify(poseArray, gotResults);
 }
 
+let old_command = 'None'
 function sendCommand(command){
-  console.log("trying to send something")
-  let ws = new WebSocket("ws://192.168.1.202:8765")
-  ws.addEventListener("open",function(event){
-    ws.send(command)
-  })
+  if (command == old_command){
+    return
+  }
+  console.log(command);
+  old_command = command
+  socket.emit('message', '/command/'+command);
+  // socket.emit('message', '/1/push1 f, 1.0');
+
 }
 // A util function to create UI buttons
 function createButtons() {
@@ -162,7 +166,7 @@ buttonSetData.mousePressed(loadMyKNN);
 
 // Show the results
 function gotResults(err, result) {
-  console.log(result);
+  // console.log(result);
   // Display any error
   if (err) {
     console.error(err);
@@ -172,6 +176,7 @@ function gotResults(err, result) {
     const confidences = result.confidencesByLabel;
     // result.label is the label that has the highest confidence
     if (result.label) {
+      sendCommand(result.label)
       select('#result').html(result.label);
       select('#confidence').html(`${confidences[result.label] * 100} %`);
     }
@@ -259,7 +264,33 @@ function drawSkeleton() {
       let partB = skeleton[j][1];
       stroke(255, 0, 0);
       line(partA.position.x, partA.position.y, partB.position.x, partB.position.y);
-      console.log('partA.position.x, partA.position.y, partB.position.x, partB.position.y');
+      // console.log('partA.position.x, partA.position.y, partB.position.x, partB.position.y');
     }
   }
 }
+
+var socket = io('http://127.0.0.1:8081');
+socket.on('connect', function() {
+     // sends to socket.io server the host/port of oscServer
+     // and oscClient
+     socket.emit('config',
+         {
+             server: {
+                 port: 3333,
+                 host: '127.0.0.1'
+             },
+             client: {
+                 port: 5005,
+                 host: '127.0.0.1'
+             }
+         }
+     );
+ });
+
+
+
+//  socket.on('message', function(obj) {
+//      var status = document.getElementById("status");
+//      status.innerHTML = obj[0];
+//      console.log(obj);
+//  });

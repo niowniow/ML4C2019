@@ -29,7 +29,10 @@ function setup() {
   // This sets up an event that fills the global variable "poses"
   // with an array every time new poses are detected
   poseNet.on('pose', function(results) {
-    poses = results;
+    if (typeof results !== 'undefined') {
+      // the variable is defined
+      poses = results;
+    }
   });
   // Hide the video element, and just show the canvas
   video.hide();
@@ -70,22 +73,29 @@ function classify() {
     console.error('There is no examples in any label');
     return;
   }
-  // Convert poses results to a 2d array [[score0, x0, y0],...,[score16, x16, y16]]
-  const poseArray = poses[0].pose.keypoints.map(p => [p.score, p.position.x, p.position.y]);
 
-  // Use knnClassifier to classify which label do these features belong to
-  // You can pass in a callback function `gotResults` to knnClassifier.classify function
-  knnClassifier.classify(poseArray, gotResults);
+  
+
+  try { 
+    // Convert poses results to a 2d array [[score0, x0, y0],...,[score16, x16, y16]]
+    const poseArray = poses[0].pose.keypoints.map(p => [p.score, p.position.x, p.position.y]);
+
+    // Use knnClassifier to classify which label do these features belong to
+    // You can pass in a callback function `gotResults` to knnClassifier.classify function
+    knnClassifier.classify(poseArray, gotResults);
+  } catch(err) {
+    console.log('cacca');
+  }
 }
 
 let old_command = 'None'
 function sendCommand(command){
    if (command != old_command){
-      console.log(command);
       old_command = command
+      socket.emit('message',  "/action/"+command);
    }
 
-
+  console.log(command);
   
   let num = 0
   var points = new Array(16);
@@ -106,18 +116,20 @@ function sendCommand(command){
             points[num] = keypoint.position.x/canvasX 
             points[num+1] = keypoint.position.y/canvasY
             num += 2
-
           }
         }
       }
     }
 
-    message = '/wek/inputs '
-    // message = ''
+    message = "/wek/inputs "
+    // message = ""
     for (var i = 0; i < arrayLength; i++) {
-       message +=  points[i] + ' '
+       message = message.concat(points[i].toString())
+       if(i < 15){
+       message = message.concat(" ")}
     }
-  socket.emit('message', message);
+  // socket.emit('message',  "/wek/inputs", 5.0, 0.0, 1.0, 2.0);
+  socket.emit('message',  message);
   // socket.emit('message', '/1/push1 f, 1.0');
   // socket.emit('message', '/wek/inputs/ 1.0');
 
@@ -159,6 +171,7 @@ function gotResults(err, result) {
   try {
     classify();
   } catch(err) {
+    console.error(err);
     console.log('cacca');
   }
 }
